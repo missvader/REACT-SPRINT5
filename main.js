@@ -1,7 +1,8 @@
 //accedemos al DOM y creamos un listener para button
 const $btn = document.getElementById("btn");
+const $randomJoke = document.getElementById("random-joke");
 $btn.addEventListener("click" ,getJoke);
-//funcion asincrona que llama a API y muestra en consola joke
+//funcion asincrona que llama a API y muestra en pantalla
 async function getJoke() {
   const result = await fetch("https://icanhazdadjoke.com/", {
     headers: {
@@ -9,5 +10,5 @@ async function getJoke() {
     }
   })
   const json = await result.json();
-  console.log(json.joke);
+  $randomJoke.textContent = json.joke;
 }
