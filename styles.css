@@ -7,10 +7,9 @@ body{
 }
 #weather{
   color: white;
+  font-size: 3rem;
 }
-h3{
-  font-size: 5rem;
-}
+
 h1{
   font-size: 8rem;
 }

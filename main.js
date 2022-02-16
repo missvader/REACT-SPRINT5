@@ -1,10 +1,10 @@
-//accedemos al DOM y creamos un listener para button
 const $btn = document.getElementById("btn");
 const $randomJoke = document.getElementById("random-joke");
 const $starRating = document.getElementsByClassName("rating");
-$btn.addEventListener("click" ,getJoke);
-//funcion asincrona que llama a API y muestra en pantalla
+const $textWeather = document.getElementById("weather");
+//Fetch API dadjoke
 let resultJoke;
+$btn.addEventListener("click" ,getJoke);
 async function getJoke() {
   const result = await fetch("https://icanhazdadjoke.com/", {
     headers: {
@@ -17,20 +17,24 @@ async function getJoke() {
 }
 //create array acudits and rateJoke()
 let reportAcudits = [];
-const $rating = getElementsByClassName("rating");
-if($rating){
-  $rating.addEventListener("click", rateJoke);
-}
 function rateJoke(userScore){
   let dadJoke = {
     joke: resultJoke,
     score: userScore,
-    date: new Date().toISOString()
+    date: new Date().toISOString() 
   }
   reportAcudits.push(dadJoke);
   console.log(reportAcudits);
 }
-
-
+//fetch a API OpenWeatherMap
+let resultWeather;
+async function getWeather(){
+  const result = await fetch("https://api.openweathermap.org/data/2.5/weather?q=barcelona&appid=2d7e65cf09c54b1e66576f39ba4531d4&units=metric&lang=ca") ;
+  const json = await result.json();
+  resultWeather = json.weather[0].description;
+  console.log(resultWeather);
+  $textWeather.textContent = `Avui : ${resultWeather}`;
+}
+window.addEventListener("load", getWeather);
 
 
