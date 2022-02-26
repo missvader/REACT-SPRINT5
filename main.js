@@ -1,10 +1,8 @@
-const $btn = document.getElementById("btn");
+const $btnJoke = document.getElementById("btn");
 const $randomJoke = document.getElementById("random-joke");
-const $starRating = document.getElementsByClassName("rating");
 const $textWeather = document.getElementById("weather");
 //Fetch API dadjoke
 let resultJoke;
-$btn.addEventListener("click" ,getJoke);
 async function getJoke() {
   const result = await fetch("https://icanhazdadjoke.com/", {
     headers: {
@@ -18,13 +16,26 @@ async function getJoke() {
 //create array acudits and rateJoke()
 let reportAcudits = [];
 function rateJoke(userScore){
-  let dadJoke = {
+  let randomJoke = {
     joke: resultJoke,
     score: userScore,
     date: new Date().toISOString() 
   }
-  reportAcudits.push(dadJoke);
+  reportAcudits.push(randomJoke);
   console.log(reportAcudits);
+}
+//Fetch API ChuckNorris
+let resultChuck;
+async function getChuckJoke(){
+  const result = await fetch("https://api.chucknorris.io/jokes/random");
+  const json = await result.json();
+  resultJoke = json.value;
+  $randomJoke.textContent = resultJoke;
+}
+//random number to decide between APIS
+const fetchJoke = () => {
+  let randomNumber= Math.round(Math.random()*10);
+  let randomJoke = (randomNumber >5) ? getChuckJoke() : getJoke();
 }
 //fetch a API OpenWeatherMap
 let resultWeather;
@@ -36,5 +47,6 @@ async function getWeather(){
   $textWeather.textContent = `Avui : ${resultWeather}`;
 }
 window.addEventListener("load", getWeather);
+$btnJoke.addEventListener("click" , fetchJoke);
 
 
